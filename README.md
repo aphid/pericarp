@@ -5,7 +5,7 @@ The pericarp is the tough, outer shell of a popcorn kernel, crucial for the popp
 
 pericarp.cue takes arguments:
 
-1. the dom object being targeted (<audio> or <video>)
+1. the dom object being targeted (<audio> or <video) OR a querySelector string that will point at one of those tags ("video")
 2. start time in seconds or hh:mm:ss or mm:ss
 3. end time in same formats
 4. function to run (once) when in between the start and end time
