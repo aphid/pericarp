@@ -8,7 +8,7 @@ pericarp.toHMS = function (sec) {
     return new Date(sec * 1000).toISOString().slice(11, 19);
 }
 
-//"00:00:15" --> 15
+//"00:00:15" --> 15 || "00:15" --> 15
 pericarp.toSec = function (hms) {
     if (typeof hms === "number") {
         return hms;
@@ -19,8 +19,10 @@ pericarp.toSec = function (hms) {
     //if hhmmss
     if (s.length == 3) {
         seconds = (+s[0]) * 60 * 60 + (+s[1]) * 60 + (+s[2]);
+    //or mmss
     } else if (s.length == 2) {
         seconds = parseInt(+s[0],10) * 60 + parseFloat(+s[1]) 
+    //or ...something else? no thanks
     } else {
         throw ("h:m:s please")
     }
@@ -28,7 +30,7 @@ pericarp.toSec = function (hms) {
 }
 
 pericarp.cue = function (element, start, end, startfn, endfn) {
-    //if element is a string, try a qS on it
+    //if element is a string instead of a html element, try a querySelector on it
     if (typeof element === "string"){
         let check = document.querySelector(element); 
         if (check instanceof HTMLElement){
@@ -44,9 +46,11 @@ pericarp.cue = function (element, start, end, startfn, endfn) {
     if (end < start) {
         throw ("umm end is before start");
     }
+    //make sure functions are functions
     if (typeof startfn !== "function") {
         throw ("start function isn't a function")
     }
+    //and that numbers are numbers
     if (!isNumeric(start)) {
         start = this.toSec(start);
     }
@@ -54,7 +58,7 @@ pericarp.cue = function (element, start, end, startfn, endfn) {
         end = this.toSec(end);
     }
 
-
+    
     let p = new Pericarp(element, start, end, startfn, endfn);
     this.cues.push(p);
     return p;
@@ -62,7 +66,8 @@ pericarp.cue = function (element, start, end, startfn, endfn) {
 
 
 let Pericarp = function (element, start, end, startfn, endfn) {
-    let carp = this;
+    let cue = this;
+    
     if (!start && end && startfn) {
         throw ("missing some stuff here")
     }
@@ -87,18 +92,16 @@ let Pericarp = function (element, start, end, startfn, endfn) {
     this.started = false;
 
     element.addEventListener("timeupdate", function () {
-        if ((this.currentTime > carp.start && this.currentTime < carp.end) && !carp.started) {
-            carp.started = true;
-            carp.startfn();
-        } else if ((this.currentTime < carp.start || this.currentTime > carp.end) && carp.started) {
-            carp.started = false;
-            carp.endfn();
+        if ((this.currentTime > cue.start && this.currentTime < cue.end) && !cue.started) {
+            cue.started = true;
+            cue.startfn();
+        } else if ((this.currentTime < cue.start || this.currentTime > cue.end) && cue.started) {
+            cue.started = false;
+            cue.endfn();
             //todo: add something to remove listener if it has a "once" property
-            //or maybe they should have a count?
+            //or maybe they should have a count? this can also happen in startfn function logic...
         }
     });
-    console.log(this);
-    pericarp.cues.push(this);
 }
 
 function isNumeric(str) {
