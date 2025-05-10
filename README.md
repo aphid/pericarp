@@ -15,6 +15,7 @@ here's a very basic example that will make the annotation div visible between 5 
 ```
 ...
 <head>
+<script src="pericarp.js"></script>
 <style>
    #annotation { opacity: 0; transition: all 1s linear; }
 </style>
@@ -27,13 +28,21 @@ here's a very basic example that will make the annotation div visible between 5 
 let video = document.querySelector("video")
 let annotate = document.querySelector("#annotation")
 
+//make our annotation visible between 5 & 10 seconds.
 pericarp.cue(video, 5,10,function(){
-   //make our annotation visible
    annotate.style.opacity = 1;
 },function(){
    //hide the annotation
    annotate.style.opacity = 0;
 });
+
+//when you get within 10 seconds from the end, go back to the beginning
+pericarp.cue(video, video.duration - 10, video.duration, backToStart); 
+
+function backToStart(){
+   video.currentTime = 0;
+}
+
 </script>
 ...
 ```
