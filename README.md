@@ -1,12 +1,14 @@
 # pericarp
-lightweight time-based media (audio/video) time coding
+lightweight tool for hooking things to timestamp ranges in HTML5 audio or video. 
 
-The pericarp is the tough, outer shell of a popcorn kernel, crucial for the popping process.
+inspired by the functions in popcornjs i used the most.
 
-pericarp.cue takes arguments:
+a pericarp is the tough, outer shell of a popcorn kernel, crucial for the popping process.
 
-1. the dom object being targeted (<audio> or <video) OR a querySelector string that will point at one of those tags ("video")
-2. start time in seconds or hh:mm:ss or mm:ss
+pericarp.cue takes several arguments:
+
+1. the dom object being targeted (audio or video tags) OR a CSS selector string (what you'd use in querySelector) that will point at one of those tags.
+2. start time in seconds OR hh:mm:ss OR mm:ss
 3. end time in same formats
 4. function to run (once) when in between the start and end time
 5. OPTIONAL function to run when leaving the timespan.
