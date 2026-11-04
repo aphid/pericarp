@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>abram's first birthday glitchmode</title>
+
+
+    <style>
+        #welcome {
+            background-color: darkorchid;
+            color: white;
+            font-size: 24pt;
+            font-family: monospace;
+        }
+
+        .media {
+            border: 3px dotted #008000;
+            transition: all 5s linear;
+            opacity: 0;
+        }
+
+        .visible {
+            opacity: 1;
+        }
+
+        .paused {
+            opacity: 0.5;
+            background-color: papayawhip;
+        }
+
+        .media:hover {
+            border: 5px dotted pink;
+        }
+
+        video {
+            width: 200px;
+        }
+
+        .colorEffect1 {
+            filter: saturate(200%) hue-rotate(60deg);
+        }
+
+        .colorEffect2 {
+            filter: saturate(500%) hue-rotate(180deg);
+        }
+
+        .spin {
+            transform: rotate(720deg);
+        }
+    </style>
+
+    <script src="pericarp.js"></script>
+
+</head>
+
+<body>
+    <p id="welcome">hi hello hi</p>
+    <p id="annotation">la la la</p>
+    <video class="media" controls src="afb_moshed.mp4"></video>
+
+
+
+
+    <script>
+        let video = document.querySelector(".media");
+        let rosie = new Pericarp(video);
+        let ann = document.querySelector("#annotation");
+
+        rosie.on("canplay", fadein);
+        rosie.on("pause", pawsd);
+        //rosie.on("play", pawsd);
+
+        function fadein() {
+            video.classList.add("visible");
+        }
+
+        function pawsd() {
+            video.classList.toggle("paused");
+        }
+
+        rosie.cue(5, 10, function () {
+            video.classList.add("colorEffect1");
+            ann.textContent = "color1";
+        }, function () {
+            video.classList.remove("colorEffect1");
+            video.classList.add("colorEffect2");
+            ann.textContent = "color2!"
+        }
+        );
+
+        rosie.cue(15, 20, function () {
+            video.pause();
+            video.classList.add("spin");
+            ann.textContent = "spin spin spin!"
+            rosie.currentTime(600);
+
+        })
+
+
+    </script>
+</body>
+
+</html>
