@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>html5 video is fun fun fun!</title>
+    <style>
+        body {
+            background: darkred;
+            transition: all 3s ease-out;
+        }
+
+        video {
+            border: 5px solid green;
+            width: 300px;
+            transition: all 5s linear;
+        }
+
+        .larger {
+            width: 500px;
+        }
+
+        .larger:hover {
+            filter: hue-rotate(180deg);
+            width: 1000px;
+        }
+
+        #lastVid {
+            transform: rotate(90deg);
+        }
+
+        .dark {
+            background-color: black;
+        }
+
+        .light {
+            background-color: papayawhip;
+        }
+
+    </style>
+    <script src="pericarp.js"></script>
+</head>
+<body>
+    <h1>hi hello, hello world</h1>
+
+    <video class="hueShift larger" muted loop autoplay controls>
+        <source src="HotDrPepper.mp4">
+    </video>
+
+    <!--
+      <video muted loop autoplay controls>
+        <source src="HotDrPepper.mp4">
+    </video>
+      <video muted loop autoplay controls>
+        <source src="HotDrPepper.mp4">
+    </video>
+      <video muted loop autoplay controls>
+        <source src="HotDrPepper.mp4">
+    </video>
+      <video muted loop autoplay controls>
+        <source src="HotDrPepper.mp4">
+    </video>
+      <video muted loop autoplay controls>
+        <source src="HotDrPepper.mp4">
+    </video>
+      <video muted loop autoplay controls>
+        <source src="HotDrPepper.mp4">
+    </video>
+      <video id="lastVid" muted loop autoplay controls>
+        <source src="HotDrPepper.mp4">
+    </video>
+-->
+
+<script>
+    let vid = document.querySelector("video");
+    let pericarp = new Pericarp(vid);
+
+
+
+    pericarp.cue(5, 10, dark, light);
+
+    pericarp.cue(15,17, function(){
+        vid.currentTime = 25;
+        vid.pause();
+    })
+
+    function dark(){
+        document.body.classList.remove("light");
+        document.body.classList.add("dark");
+    }
+    function light(){
+        document.body.classList.remove("dark");
+        document.body.classList.add("light");
+    }
+
+
+</script>
+</body>
+</html>
+
+
